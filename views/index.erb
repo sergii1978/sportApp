@@ -1,0 +1,60 @@
+<% content_for :title do %><%= t(:home) %><% end %>
+
+  <header class="text-center py-5 bg-dark text-white animate__animated animate__fadeIn">
+    <div class="container">
+      <h1 class="display-4 fw-bold"><%= t(:welcome_to_fitness_club) %></h1>
+      <p class="lead"><%= t(:achieve_goals_with_us) %></p>
+      <a href="/schedule" class="btn btn-outline-light btn-lg mt-3">
+        <i class="fas fa-calendar-alt me-2"></i> <%= t(:see_schedule) %>
+      </a>
+    </div>
+  </header>
+  
+  <section class="container py-5">
+    <div class="row text-center">
+      <div class="col-md-4 mb-4 animate__animated animate__fadeInUp">
+        <i class="fas fa-dumbbell fa-3x mb-3 text-primary"></i>
+        <h3><%= t(:modern_equipment) %></h3>
+        <p><%= t(:modern_equipment_desc) %></p>
+      </div>
+      <div class="col-md-4 mb-4 animate__animated animate__fadeInUp animate__delay-1s">
+        <i class="fas fa-users fa-3x mb-3 text-primary"></i>
+        <h3><%= t(:professional_trainers) %></h3>
+        <p><%= t(:professional_trainers_desc) %></p>
+      </div>
+      <div class="col-md-4 mb-4 animate__animated animate__fadeInUp animate__delay-2s">
+        <i class="fas fa-heartbeat fa-3x mb-3 text-primary"></i>
+        <h3><%= t(:health_focus) %></h3>
+        <p><%= t(:health_focus_desc) %></p>
+      </div>
+    </div>
+  </section>
+  
+  <section class="bg-light py-5">
+    <div class="container">
+      <h2 class="text-center mb-5"><%= t(:join_now) %></h2>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <form action="/subscribe" method="post" class="p-4 bg-white shadow rounded">
+            <div class="mb-3">
+              <label for="email" class="form-label"><%= t(:your_email) %></label>
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="fas fa-envelope me-2"></i> <%= t(:subscribe) %>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="py-5">
+    <div class="container text-center">
+      <h2 class="mb-4"><%= t(:our_gallery) %></h2>
+      <a href="/gallery" class="btn btn-outline-secondary btn-lg">
+        <i class="fas fa-images me-2"></i> <%= t(:view_gallery) %>
+      </a>
+    </div>
+  </section>
+  

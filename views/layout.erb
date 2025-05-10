@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="<%= I18n.locale %>">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fitness Club</title>
+  <meta name="description" content="Професійний фітнес клуб: тренери, послуги, розклад, галерея та підписка на новини.">
+  <meta name="keywords" content="фітнес, тренажерний зал, тренери, послуги, спорт, розклад">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Fitness Club">
+  <meta property="og:description" content="Професійний фітнес клуб для всіх!">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fitnessclub.com/">
+  <meta property="og:image" content="https://fitnessclub.com/og-image.jpg">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<div class="container">
+  <a class="navbar-brand" href="/">🏋️‍♂️ FitClub</a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav me-auto">
+      <li class="nav-item"><a class="nav-link" href="/"><%= t(:home) %></a></li>
+      <li class="nav-item"><a class="nav-link" href="/about"><%= t(:about) %></a></li>
+      <li class="nav-item"><a class="nav-link" href="/services"><%= t(:services) %></a></li>
+      <li class="nav-item"><a class="nav-link" href="/trainers"><%= t(:trainers) %></a></li>
+      <li class="nav-item"><a class="nav-link" href="/schedule"><%= t(:schedule) %></a></li>
+      <li class="nav-item"><a class="nav-link" href="/gallery"><%= t(:gallery) %></a></li>
+      <li class="nav-item"><a class="nav-link" href="/contact"><%= t(:contact) %></a></li>
+    </ul>
+
+    <!-- 👇 Тут додається вихід для адміна -->
+    <ul class="navbar-nav ms-auto">
+      <% if session[:admin] %>
+        <li class="nav-item">
+          <a class="nav-link" href="/admin/logout"><i class="fas fa-sign-out-alt me-1"></i> <%= t(:logout) %></a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+</nav>
+
+
+  <main class="container mt-4">
+    <%= yield %>
+  </main>
+
+  <footer class="bg-dark text-white text-center py-4">
+    <p>&copy; 2023 Fitness Club. Всі права захищені.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<% content_for :title do %><%= t(:trainers) %><% end %>
+
+  <header class="text-center py-5 bg-dark text-white">
+    <div class="container">
+      <h1 class="display-4 fw-bold"><%= t(:trainers) %></h1>
+      <p class="lead"><%= t(:meet_our_trainers) %></p>
+    </div>
+  </header>
+  
+  <section class="container py-5">
+    <div class="row text-center">
+      <% @trainers.each do |trainer| %>
+        <div class="col-md-4 mb-4">
+          <img src="<%= trainer[:photo] %>" class="rounded-circle mb-3" alt="<%= trainer[:name] %>" width="150" height="150">
+          <h3><%= trainer[:name] %></h3>
+          <p><%= trainer[:specialization] %></p>
+        </div>
+      <% end %>
+    </div>
+  </section>
+  

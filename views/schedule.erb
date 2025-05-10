@@ -1,0 +1,32 @@
+<% content_for :title do %><%= t(:schedule) %><% end %>
+
+  <header class="text-center py-5 bg-dark text-white">
+    <div class="container">
+      <h1 class="display-4 fw-bold"><%= t(:schedule) %></h1>
+      <p class="lead"><%= t(:check_our_schedule) %></p>
+    </div>
+  </header>
+  
+  <section class="container py-5">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th><%= t(:day) %></th>
+          <th><%= t(:time) %></th>
+          <th><%= t(:class) %></th>
+          <th><%= t(:trainer) %></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @schedule.each do |session| %>
+          <tr>
+            <td><%= session[:day] %></td>
+            <td><%= session[:time] %></td>
+            <td><%= session[:class] %></td>
+            <td><%= session[:trainer] %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </section>
+  
