@@ -1,64 +1,71 @@
-<!doctype html>
-<html lang="<%= I18n.locale %>">
+<!DOCTYPE html>
+<html lang="uk">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fitness Club</title>
-  <meta name="description" content="Професійний фітнес клуб: тренери, послуги, розклад, галерея та підписка на новини.">
-  <meta name="keywords" content="фітнес, тренажерний зал, тренери, послуги, спорт, розклад">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Fitness Club">
-  <meta property="og:description" content="Професійний фітнес клуб для всіх!">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://fitnessclub.com/">
-  <meta property="og:image" content="https://fitnessclub.com/og-image.jpg">
-  <link rel="icon" href="/favicon.ico">
+  <meta name="description" content="Фітнес клуб з найкращими тренерами, сучасними програмами та комфортними умовами.">
+  <meta name="keywords" content="фітнес, спортзал, тренування, тренери, розклад, галерея">
+  <meta name="author" content="Fitness Club">
+  <title>Фітнес Клуб</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/styles.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/favicon.ico">
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-<div class="container">
-  <a class="navbar-brand" href="/">🏋️‍♂️ FitClub</a>
-  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+<body class="bg-dark text-white">
 
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav me-auto">
-      <li class="nav-item"><a class="nav-link" href="/"><%= t(:home) %></a></li>
-      <li class="nav-item"><a class="nav-link" href="/about"><%= t(:about) %></a></li>
-      <li class="nav-item"><a class="nav-link" href="/services"><%= t(:services) %></a></li>
-      <li class="nav-item"><a class="nav-link" href="/trainers"><%= t(:trainers) %></a></li>
-      <li class="nav-item"><a class="nav-link" href="/schedule"><%= t(:schedule) %></a></li>
-      <li class="nav-item"><a class="nav-link" href="/gallery"><%= t(:gallery) %></a></li>
-      <li class="nav-item"><a class="nav-link" href="/contact"><%= t(:contact) %></a></li>
-    </ul>
+  <!-- Навігація -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-black shadow-sm sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="/">ФітнесКлуб</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="/">Головна</a></li>
+          <li class="nav-item"><a class="nav-link" href="/about">Про нас</a></li>
+          <li class="nav-item"><a class="nav-link" href="/services">Послуги</a></li>
+          <li class="nav-item"><a class="nav-link" href="/trainers">Тренери</a></li>
+          <li class="nav-item"><a class="nav-link" href="/schedule">Розклад</a></li>
+          <li class="nav-item"><a class="nav-link" href="/gallery">Галерея</a></li>
+          <li class="nav-item"><a class="nav-link" href="/contact">Контакти</a></li>
+          <% if session[:admin] %>
+            <li class="nav-item"><a class="nav-link" href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Вийти</a></li>
+          <% else %>
+            <li class="nav-item"><a class="nav-link" href="/admin/login"><i class="fas fa-user-shield"></i> Вхід</a></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-    <!-- 👇 Тут додається вихід для адміна -->
-    <ul class="navbar-nav ms-auto">
-      <% if session[:admin] %>
-        <li class="nav-item">
-          <a class="nav-link" href="/admin/logout"><i class="fas fa-sign-out-alt me-1"></i> <%= t(:logout) %></a>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-</div>
-</nav>
-
-
-  <main class="container mt-4">
+  <!-- Основний вміст -->
+  <main class="flex-grow-1">
     <%= yield %>
   </main>
 
-  <footer class="bg-dark text-white text-center py-4">
-    <p>&copy; 2023 Fitness Club. Всі права захищені.</p>
+  <!-- Футер -->
+  <footer class="bg-black text-center text-white py-4 mt-5">
+    <p class="mb-0">&copy; <%= Time.now.year %> Фітнес Клуб. Усі права захищені.</p>
   </footer>
 
+  <!-- Модальне вікно для зображень -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content bg-dark">
+        <div class="modal-header border-0">
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-center">
+          <img src="" class="img-fluid modal-img" alt="Modal Image">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Скрипти -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/main.js"></script>
 </body>
 </html>

@@ -1,29 +1,62 @@
-<% content_for :title do %><%= t(:services) %><% end %>
+<section class="container py-5 text-white">
+  <h1 class="text-center mb-5">Наші послуги</h1>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card bg-dark text-white h-100 shadow">
+        <div class="card-body text-center">
+          <i class="fas fa-running fa-3x mb-3 text-primary"></i>
+          <h5 class="card-title">Кардіотренування</h5>
+          <p class="card-text">Ідеально для покращення витривалості, зниження ваги та здоров'я серця.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-dark text-white h-100 shadow">
+        <div class="card-body text-center">
+          <i class="fas fa-dumbbell fa-3x mb-3 text-primary"></i>
+          <h5 class="card-title">Силові тренування</h5>
+          <p class="card-text">Нарощення м'язів, зміцнення тіла та формування ідеальної фігури.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-dark text-white h-100 shadow">
+        <div class="card-body text-center">
+          <i class="fas fa-child fa-3x mb-3 text-primary"></i>
+          <h5 class="card-title">Фітнес для дітей</h5>
+          <p class="card-text">Веселі й корисні заняття для наймолодших клієнтів.</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <header class="text-center py-5 bg-dark text-white">
-    <div class="container">
-      <h1 class="display-4 fw-bold"><%= t(:services) %></h1>
-      <p class="lead"><%= t(:discover_our_services) %></p>
-    </div>
-  </header>
-  
-  <section class="container py-5">
-    <div class="row text-center">
-      <div class="col-md-4 mb-4">
-        <i class="fas fa-dumbbell fa-3x mb-3 text-primary"></i>
-        <h3><%= t(:personal_training) %></h3>
-        <p><%= t(:personal_training_desc) %></p>
-      </div>
-      <div class="col-md-4 mb-4">
-        <i class="fas fa-heartbeat fa-3x mb-3 text-primary"></i>
-        <h3><%= t(:yoga_classes) %></h3>
-        <p><%= t(:yoga_classes_desc) %></p>
-      </div>
-      <div class="col-md-4 mb-4">
-        <i class="fas fa-swimmer fa-3x mb-3 text-primary"></i>
-        <h3><%= t(:pool_training) %></h3>
-        <p><%= t(:pool_training_desc) %></p>
+  <div class="row g-4 mt-4">
+    <div class="col-md-4">
+      <div class="card bg-dark text-white h-100 shadow">
+        <div class="card-body text-center">
+          <i class="fas fa-spa fa-3x mb-3 text-primary"></i>
+          <h5 class="card-title">Йога та релакс</h5>
+          <p class="card-text">Заняття з глибокого розслаблення та гнучкості для душі й тіла.</p>
+        </div>
       </div>
     </div>
-  </section>
-  
+    <div class="col-md-4">
+      <div class="card bg-dark text-white h-100 shadow">
+        <div class="card-body text-center">
+          <i class="fas fa-swimmer fa-3x mb-3 text-primary"></i>
+          <h5 class="card-title">Аквафітнес</h5>
+          <p class="card-text">Тренування у воді для реабілітації, тонусу та відпочинку.</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-dark text-white h-100 shadow">
+        <div class="card-body text-center">
+          <i class="fas fa-apple-alt fa-3x mb-3 text-primary"></i>
+          <h5 class="card-title">Дієтологія</h5>
+          <p class="card-text">Консультації з харчування від сертифікованих спеціалістів.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

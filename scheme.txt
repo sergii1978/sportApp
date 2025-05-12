@@ -1,27 +1,39 @@
-my_fitness_site/
-├── app.rb
-├── config.ru
-├── Gemfile
+fitness_site/
+│
+├── app.rb                      # Головний файл додатку Sinatra
+├── config.ru                   # Rack-конфігурація для запуску
+├── Gemfile                     # Залежності (gems)
+├── Rakefile                    # Для міграцій БД
+│
 ├── db/
-│   ├── schema.sql
-│   └── seeds.rb
+│   ├── schema.rb               # Структура БД
+│   └── migrate/
+│       ├── 01_create_images.rb
+│       ├── 02_create_comments.rb
+│       └── 03_create_admins.rb
+│
 ├── public/
-│   ├── uploads/
-│   ├── css/
-│   │   └── styles.css
-│   └── js/
-│       └── main.js
+│   ├── uploads/                # Завантажені зображення
+│   ├── stylesheets/
+│   │   └── style.css           # Власні стилі
+│   ├── js/
+│   │   └── main.js             # JS-логіка (слайдер, модальні вікна тощо)
+│   └── assets/
+│       └── favicon.ico         # Інші ресурси
+│
 ├── views/
-│   ├── layout.erb
-│   ├── index.erb
-│   ├── about.erb
-│   ├── services.erb
-│   ├── trainers.erb
-│   ├── schedule.erb
-│   ├── gallery.erb
-│   ├── contact.erb
-│   └── admin.erb
-├── locales/
-│   ├── en.yml
-│   └── uk.yml
-└── uploads/
+│   ├── layout.erb              # Основний шаблон
+│   ├── index.erb               # Головна
+│   ├── about.erb               # Про нас
+│   ├── services.erb            # Послуги
+│   ├── trainers.erb            # Тренери
+│   ├── schedule.erb            # Розклад
+│   ├── gallery.erb             # Галерея з коментарями і слайдером
+│   ├── contact.erb             # Контакти
+│   ├── admin_login.erb         # Вхід адміністратора
+│   └── not_found.erb           # 404
+│
+├── locales/ (опційно)
+│   └── uk.yml                  # Українська локалізація (необов’язково)
+│
+└── .env                        # Для зберігання змінних середовища (логін/пароль)

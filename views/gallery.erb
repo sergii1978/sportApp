@@ -1,144 +1,58 @@
-# views/gallery.erb
-<% content_for :title do %><%= t(:gallery) %><% end %>
+<div class="container py-5">
+  <h1 class="text-center mb-4 text-light">Галерея</h1>
 
-  <h1 class="text-center mb-4 animate__animated animate__fadeInDown"><%= t(:gallery) %></h1>
-  
-  <!-- Upload Form (Admin Only) -->
   <% if session[:admin] %>
-    <form action="/upload" method="post" enctype="multipart/form-data" class="mb-5 p-4 bg-light border rounded">
-      <div class="mb-3">
-        <label class="form-label"><%= t(:upload_image) %></label>
-        <input type="file" name="image" class="form-control" required>
-      </div>
-      <button type="submit" class="btn btn-primary"><i class="fas fa-upload"></i> <%= t(:upload) %></button>
-    </form>
-  <% end %>
-  
-  <!-- Carousel -->
-  <div id="galleryCarousel" class="carousel slide mb-5 animate__animated animate__zoomIn" data-bs-ride="carousel">
-    <div class="carousel-inner rounded shadow">
-      <% @images.each_with_index do |img, i| %>
-        <div class="carousel-item <%= 'active' if i == 0 %>">
-          <img src="<%= img[:url] %>" class="d-block w-100" alt="Slide <%= i+1 %>">
+    <div class="mb-4">
+      <form action="/upload" method="post" enctype="multipart/form-data" class="bg-dark p-3 rounded">
+        <div class="mb-3">
+          <label for="image" class="form-label text-light">Завантажити зображення</label>
+          <input type="file" name="image" class="form-control" required>
         </div>
-      <% end %>
+        <button type="submit" class="btn btn-success">Завантажити</button>
+      </form>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </button>
-  </div>
-  
-  <!-- Mosaic Grid with Lightbox -->
-  <h2 class="text-center mb-4"><%= t(:photo_gallery) %></h2>
-  <div class="row g-3">
-    <% @images.each_with_index do |img, i| %>
-      <div class="col-6 col-md-4 animate__animated animate__fadeInUp" style="animation-delay: <%= (i * 0.1).round(2) %>s">
-        <a href="<%= img[:url] %>" data-bs-toggle="modal" data-bs-target="#lightboxModal" data-img="<%= img[:url] %>">
-          <img src="<%= img[:url] %>" class="img-fluid rounded shadow-sm" alt="Image <%= i+1 %>">
-        </a>
+  <% end %>
+
+  <div class="row gallery-grid g-3">
+    <% @images.each do |img| %>
+      <div class="col-6 col-md-4 col-lg-3">
+        <img src="<%= img %>" alt="Галерея" class="img-fluid rounded shadow-sm gallery-image" style="cursor:pointer;">
       </div>
     <% end %>
   </div>
-  
-  <!-- Lightbox Modal -->
-  <div class="modal fade" id="lightboxModal" tabindex="-1" aria-labelledby="lightboxLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content bg-dark">
-        <div class="modal-body text-center">
-          <img src="" class="img-fluid rounded" id="lightboxImage" alt="lightbox image">
-        </div>
-      </div>
+
+  <!-- Модальне вікно -->
+  <div id="imageModal" class="modal" style="display:none; position:fixed; z-index:1050; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.9);">
+    <span id="modalClose" style="position:absolute; top:20px; right:35px; color:white; font-size:40px; font-weight:bold; cursor:pointer;">&times;</span>
+    <div style="text-align:center; margin-top:60px;">
+      <img id="modalImage" class="modal-img" style="max-width:90%; max-height:80vh;" alt=""/>
+      <div id="modalCaption" style="color:#ccc; margin-top:10px;"></div>
     </div>
   </div>
-  
-  <!-- Admin Button in Navbar -->
-  <% content_for :admin_logout do %>
-    <% if session[:admin] %>
-      <li class="nav-item">
-        <a class="nav-link" href="/admin/logout">
-          <i class="fas fa-sign-out-alt me-1"></i> <%= t(:logout) %>
-        </a>
-      </li>
-    <% end %>
-  <% end %>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const modal = document.getElementById('lightboxModal');
-      const modalImg = document.getElementById('lightboxImage');
-      document.querySelectorAll('[data-bs-target="#lightboxModal"]').forEach(link => {
-        link.addEventListener('click', function () {
-          const imgSrc = this.getAttribute('data-img');
-          modalImg.setAttribute('src', imgSrc);
-        });
-      });
-    });
-  </script>
-  
-  <!-- Comments Section -->
-  <div class="mt-5">
-    <h3><%= t(:comments) %></h3>
-    <% @comments.each do |comment| %>
-      <div class="mb-3 p-3 border rounded">
-        <strong><%= comment[:author] %></strong><br>
-        <%= comment[:body] %>
-      </div>
-    <% end %>
-  
-    <form action="/comments" method="post" class="mt-4">
+
+  <hr class="my-5 text-light">
+
+  <div class="bg-dark p-4 rounded">
+    <h2 class="text-light mb-3">Залишити коментар</h2>
+    <form action="/comments" method="post">
       <div class="mb-3">
-        <label class="form-label"><%= t(:your_name) %></label>
+        <label for="author" class="form-label text-light">Ім’я</label>
         <input type="text" name="author" class="form-control" required>
       </div>
       <div class="mb-3">
-        <label class="form-label"><%= t(:your_comment) %></label>
-        <textarea name="body" class="form-control" rows="3" required></textarea>
+        <label for="body" class="form-label text-light">Коментар</label>
+        <textarea name="body" rows="3" class="form-control" required></textarea>
       </div>
-      <button type="submit" class="btn btn-outline-success"><i class="fas fa-comment"></i> <%= t(:submit_comment) %></button>
+      <button type="submit" class="btn btn-primary">Надіслати</button>
     </form>
   </div>
-  
-  <!-- Dark Mode Toggle Button -->
-  <% content_for :dark_mode_toggle do %>
-    <li class="nav-item">
-      <button id="themeToggle" class="btn btn-sm btn-outline-light ms-2">
-        <i class="fas fa-adjust"></i>
-      </button>
-    </li>
-  <% end %>
-  
-  <script>
-    // Theme toggle (light/dark)
-    document.addEventListener('DOMContentLoaded', function () {
-      const btn = document.getElementById('themeToggle');
-      if (!btn) return;
-      btn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-theme');
-      });
-    });
-  </script>
-  
-  <style>
-    .dark-theme {
-      background-color: #121212;
-      color: #f0f0f0;
-    }
-  
-    .dark-theme .card,
-    .dark-theme .modal-content,
-    .dark-theme .carousel-inner,
-    .dark-theme .form-control,
-    .dark-theme .border {
-      background-color: #1e1e1e !important;
-      color: #ffffff !important;
-    }
-  
-    .dark-theme .btn-outline-light {
-      border-color: #ccc;
-      color: #ccc;
-    }
-  </style>
-  
+
+  <div class="mt-5">
+    <h3 class="text-light">Коментарі</h3>
+    <% @comments.each do |comment| %>
+      <div class="bg-secondary text-light p-3 rounded my-2">
+        <strong><%= comment[:author] %></strong>: <%= comment[:body] %>
+      </div>
+    <% end %>
+  </div>
+</div>

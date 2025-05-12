@@ -1,21 +1,47 @@
-<% content_for :title do %><%= t(:trainers) %><% end %>
-
-  <header class="text-center py-5 bg-dark text-white">
-    <div class="container">
-      <h1 class="display-4 fw-bold"><%= t(:trainers) %></h1>
-      <p class="lead"><%= t(:meet_our_trainers) %></p>
-    </div>
-  </header>
-  
-  <section class="container py-5">
-    <div class="row text-center">
-      <% @trainers.each do |trainer| %>
-        <div class="col-md-4 mb-4">
-          <img src="<%= trainer[:photo] %>" class="rounded-circle mb-3" alt="<%= trainer[:name] %>" width="150" height="150">
-          <h3><%= trainer[:name] %></h3>
-          <p><%= trainer[:specialization] %></p>
+<section class="container py-5 text-white">
+  <h1 class="text-center mb-5">Наші тренери</h1>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card bg-dark text-white h-100 shadow text-center">
+        <img src="/images/trainer1.jpg" class="card-img-top" alt="Тренер Іван">
+        <div class="card-body">
+          <h5 class="card-title">Іван Петренко</h5>
+          <p class="card-text">Старший тренер з бодібілдингу. 10 років досвіду. Чемпіон України.</p>
         </div>
-      <% end %>
+        <div class="card-footer text-muted bg-black">
+          <i class="fab fa-facebook-f me-3"></i>
+          <i class="fab fa-instagram me-3"></i>
+          <i class="fab fa-twitter"></i>
+        </div>
+      </div>
     </div>
-  </section>
-  
+    <div class="col-md-4">
+      <div class="card bg-dark text-white h-100 shadow text-center">
+        <img src="/images/trainer2.jpg" class="card-img-top" alt="Тренер Марія">
+        <div class="card-body">
+          <h5 class="card-title">Марія Коваль</h5>
+          <p class="card-text">Інструкторка з йоги та пілатесу. Сертифікована в Індії.</p>
+        </div>
+        <div class="card-footer text-muted bg-black">
+          <i class="fab fa-facebook-f me-3"></i>
+          <i class="fab fa-instagram me-3"></i>
+          <i class="fab fa-linkedin-in"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card bg-dark text-white h-100 shadow text-center">
+        <img src="/images/trainer3.jpg" class="card-img-top" alt="Тренер Олександр">
+        <div class="card-body">
+          <h5 class="card-title">Олександр Бондар</h5>
+          <p class="card-text">Тренер з кросфіту та функціонального тренінгу. 5 років досвіду.</p>
+        </div>
+        <div class="card-footer text-muted bg-black">
+          <i class="fab fa-facebook-f me-3"></i>
+          <i class="fab fa-instagram me-3"></i>
+          <i class="fab fa-youtube"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

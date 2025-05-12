@@ -1,121 +1,123 @@
+# app.rb
 require 'sinatra'
-require "sinatra/content_for"
-require 'sinatra/activerecord'
+require 'sinatra/reloader' if development?
+require 'sinatra/content_for'
+require 'sinatra/namespace'
+require 'i18n'
+require 'i18n/backend/fallbacks'
+require 'tilt/erb'
 require 'fileutils'
+require 'securerandom'
+require 'yaml'
 
-# Моделі (якщо використовуєте базу даних)
-# class Comment < ActiveRecord::Base
-#   validates :author, presence: true
-#   validates :body, presence: true
+enable :sessions
+
+
+# Localization setup
+# I18n::Backend::Simple.include I18n::Backend::Fallbacks
+# I18n.load_path += Dir['./locales/*.yml']
+# I18n.backend.load_translations
+# I18n.default_locale = :en
+
+# before do
+#   I18n.locale = session[:locale] || I18n.default_locale
 # end
 
-# Головна сторінка
+# helpers do
+#   def t(key)
+#     I18n.t(key)
+#   end
+# end
+
+# Admin password for simplicity
+ADMIN_PASSWORD = "admin123"
+
+# Root route
 get '/' do
-  # Можна отримати коментарі з бази даних або з файлу
-  @comments = [
-    { author: "John", body: "Great gallery!" },
-    { author: "Jane", body: "Nice collection of images!" }
-  ]
-
-  @images = Dir.glob('public/images/*').select { |f| f.include?('.jpg') || f.include?('.png') }
-
   erb :index
 end
 
-# Сторінка "Про нас"
-get '/about' do
-  erb :about
-end
+get '/about'     do erb :about     end
+get '/services'  do erb :services  end
+get '/trainers'  do erb :trainers  end
+get '/schedule'  do erb :schedule  end
+get '/contact'   do erb :contact   end
 
-# Сторінка "Послуги"
-get '/services' do
-  erb :services
-end
-
-# Сторінка "Тренери"
-get '/trainers' do
-  erb :trainers
-end
-
-# Сторінка "Розклад"
-get '/schedule' do
-  erb :schedule
-end
-
-# Сторінка галереї
+# Gallery
 get '/gallery' do
-  @images = Dir.glob('public/images/*').select { |f| f.include?('.jpg') || f.include?('.png') }
-  @comments = [
-    { author: "John", body: "Amazing!" },
-    { author: "Mary", body: "Love the photos!" }
-  ]
+  @images = Dir['public/uploads/*'].map { |f| f.sub('public/', '') }
+  @comments = load_comments
   erb :gallery
 end
 
-# Сторінка контактів
-get '/contact' do
-  erb :contact
-end
-
-# Завантаження зображень (тільки для адміністраторів)
 post '/upload' do
-  if session[:admin]
-    image = params[:image]
-    if image && image[:tempfile]
-      filename = image[:filename]
-      filepath = "public/images/#{filename}"
-      FileUtils.mv(image[:tempfile].path, filepath)
-      redirect '/gallery'
-    else
-      "No file selected"
-    end
-  else
-    redirect '/'
-  end
-end
-
-# Обробка коментарів
-post '/comments' do
-  author = params[:author]
-  body = params[:body]
-
-  # Збереження коментаря в базі даних або в масиві
-  # Коментарі зберігаються лише для сесії (для простоти)
-  # Якщо у вас є база даних, можете використовувати ActiveRecord
-  @comments.push({ author: author, body: body })
-
+  halt(403, 'Not authorized') unless session[:admin]
+  file = params[:image][:tempfile]
+  name = params[:image][:filename]
+  path = "public/uploads/#{SecureRandom.hex}_#{name}"
+  FileUtils.copy(file.path, path)
   redirect '/gallery'
 end
 
-# Вихід з адміністративної панелі
+# Comments
+post '/comments' do
+  comment = {
+    author: params[:author],
+    body: params[:body],
+    timestamp: Time.now
+  }
+  comments = load_comments
+  comments << comment
+  File.write('comments.yml', YAML.dump(comments))
+  redirect '/gallery'
+end
+
+def load_comments
+  File.exist?('comments.yml') ? YAML.load_file('comments.yml') : []
+end
+
+# Admin
+get '/admin/login' do
+  erb :admin_login
+end
+
+post '/admin/login' do
+  if params[:password] == ADMIN_PASSWORD
+    session[:admin] = true
+    redirect '/'
+  else
+    @error = t(:invalid_password)
+    erb :admin_login
+  end
+end
+
 get '/admin/logout' do
   session[:admin] = nil
   redirect '/'
 end
 
-# Перемикання теми (світла/темна)
-post '/toggle-theme' do
-  session[:dark_theme] = !session[:dark_theme]
-  redirect request.referrer
+# Locale switching
+get '/locale/:lang' do
+  session[:locale] = params[:lang].to_sym
+  redirect back
 end
 
-# Налаштування сесії для адміністратора
-before do
-  session[:admin] ||= false
+not_found do
+  status 404
+  erb :not_found
 end
 
-# Логін адміністратора
-get '/admin' do
-  erb :admin_login
-end
+require 'sequel'
 
-post '/admin/login' do
-  # Тестовий логін (наприклад, для простоти)
-  if params[:password] == 'adminpassword'
-    session[:admin] = true
-    redirect '/gallery'
-  else
-    @error = "Incorrect password"
-    erb :admin_login
-  end
-end
+# Підключаємося до бази
+DB = Sequel.sqlite('database.db')
+
+# Виконуємо міграції
+# Sequel.extension :migration, :core_extensions
+
+# Sequel::Migrator.run(DB, 'db/migrations')
+
+# Створення дефолтного адміністратора
+# if ADMINS.count == 0
+#   ADMINS.insert(username: 'admin', password: 'password')
+# end

@@ -1,0 +1,111 @@
+/* Основне */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #121212;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #0d6efd;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Заголовки */
+h1, h2, h3, h4, h5 {
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Навігація */
+.navbar {
+  border-bottom: 1px solid #222;
+}
+
+/* Кнопки */
+.btn-primary {
+  background-color: #0d6efd;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0b5ed7;
+}
+
+/* Галерея */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  margin-top: 1.5rem;
+}
+
+.gallery-grid img {
+  width: 100%;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  object-fit: cover;
+  height: 180px;
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+/* Модальне зображення */
+.modal-img {
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* Коментарі */
+.comment-box {
+  background-color: #1f1f1f;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-top: 1rem;
+}
+
+.comment-box p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.comment-author {
+  font-weight: bold;
+  color: #0d6efd;
+}
+
+/* Форма */
+form input, form textarea {
+  background-color: #222;
+  border: 1px solid #444;
+  color: #fff;
+}
+
+form input:focus, form textarea:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Футер */
+footer {
+  background-color: #000;
+  color: #aaa;
+}
+
+/* Мобільна адаптація */
+@media (max-width: 768px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  }
+}

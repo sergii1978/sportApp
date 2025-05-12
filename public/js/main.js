@@ -1,42 +1,37 @@
-document.addEventListener('DOMContentLoaded', function () {
-  // Зміна теми (темна/світла)
-  const themeToggleButton = document.getElementById('themeToggle');
-  if (themeToggleButton) {
-    themeToggleButton.addEventListener('click', function () {
-      document.body.classList.toggle('dark-theme');
-    });
-  }
+// Галерея – відкриття модального вікна
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("imageModal");
+  const modalImg = document.getElementById("modalImage");
+  const caption = document.getElementById("modalCaption");
 
-  // Ініціалізація слайдера (Bootstrap Carousel)
-  const galleryCarousel = document.getElementById('galleryCarousel');
-  if (galleryCarousel) {
-    new bootstrap.Carousel(galleryCarousel, {
-      interval: 2000, // автоматичне перемикання кожні 2 секунди
-      ride: 'carousel'
-    });
-  }
-
-  // Відкриття Lightbox для перегляду великих зображень
-  const lightboxModal = document.getElementById('lightboxModal');
-  const lightboxImage = document.getElementById('lightboxImage');
-  document.querySelectorAll('[data-bs-toggle="modal"]').forEach(link => {
-    link.addEventListener('click', function () {
-      const imgSrc = this.getAttribute('data-img');
-      lightboxImage.setAttribute('src', imgSrc);
+  document.querySelectorAll(".gallery-grid img").forEach(img => {
+    img.addEventListener("click", () => {
+      modal.style.display = "block";
+      modalImg.src = img.src;
+      caption.innerText = img.alt || "Зображення";
     });
   });
 
-  // Форма коментарів
-  const commentForm = document.querySelector('form[action="/comments"]');
-  if (commentForm) {
-    commentForm.addEventListener('submit', function (event) {
-      event.preventDefault();
+  document.getElementById("modalClose").addEventListener("click", () => {
+    modal.style.display = "none";
+  });
 
-      const author = commentForm.querySelector('[name="author"]').value;
-      const body = commentForm.querySelector('[name="body"]').value;
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+});
 
-      // Сюди може бути доданий AJAX-запит для відправки даних на сервер
-      alert(`Comment by ${author}: ${body}`);
-    });
-  }
+// Плавна прокрутка
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener("click", function (e) {
+    const target = document.querySelector(this.getAttribute("href"));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+  });
 });

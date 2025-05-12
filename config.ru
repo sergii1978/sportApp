@@ -1,6 +1,9 @@
-# config.ru
-require './app'
-run Sinatra::Application
+require 'bundler/setup'
+Bundler.require
 
-# I18n.load_path += Dir[File.join('config', 'locales', '*.yml')]
-# I18n.default_locale = :uk
+require './app'
+
+use Rack::Session::Cookie, secret: 'super_secret_key'
+use Rack::Locale
+
+run Sinatra::Application

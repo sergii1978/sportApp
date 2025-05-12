@@ -1,24 +1,27 @@
-<% content_for :title do %><%= t(:admin_login) %><% end %>
-
-    <div class="container mt-5" style="max-width: 400px;">
-      <div class="card shadow rounded">
+<section class="container py-5 text-white">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card bg-dark border-light shadow-lg">
         <div class="card-body">
-          <h3 class="card-title text-center mb-4"><%= t(:admin_login) %></h3>
-    
+          <h2 class="card-title text-center mb-4"><i class="fas fa-user-shield me-2"></i>Вхід для адміністратора</h2>
+
           <% if @error %>
             <div class="alert alert-danger"><%= @error %></div>
           <% end %>
-    
-          <form action="/admin/login" method="post">
+
+          <form method="post" action="/admin/login">
             <div class="mb-3">
-              <label for="password" class="form-label"><i class="fas fa-lock me-1"></i> <%= t(:password) %></label>
-              <input type="password" class="form-control" id="password" name="password" required>
+              <label for="username" class="form-label">Логін</label>
+              <input type="text" name="username" class="form-control" id="username" placeholder="Введіть логін" required>
             </div>
-            <button type="submit" class="btn btn-primary w-100">
-              <i class="fas fa-sign-in-alt me-1"></i> <%= t(:login) %>
-            </button>
+            <div class="mb-3">
+              <label for="password" class="form-label">Пароль</label>
+              <input type="password" name="password" class="form-control" id="password" placeholder="Введіть пароль" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Увійти</button>
           </form>
         </div>
       </div>
     </div>
-       
+  </div>
+</section>
